@@ -1,0 +1,17 @@
+{
+  "name": "virtualgaia.plugin.search",
+  "authors": [
+    "lucianonetto <lucuatro@gmail.com>"
+  ],
+  "description": "Busca livre para sites usando VirtualGaia",
+  "main": "",
+  "keywords": [
+    "virtualgaia"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies":{
+    "angular": "1.x",
+    "jquery" : ">1.11.1"
+  }
+}
