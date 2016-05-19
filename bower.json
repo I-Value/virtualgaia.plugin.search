@@ -9,7 +9,7 @@
     "virtualgaia"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/I-Value/virtualgaia.plugin.search",
   "dependencies":{
     "angular": "1.x",
     "jquery" : ">1.11.1"

@@ -28,6 +28,7 @@ Siga os passos e seja feliz.
 	```C#
 objBuscaRapida.template += "[pretensao]" + Environment.NewLine;         
 objBuscaRapida.template += "[tipo]" + Environment.NewLine;                      
-objBuscaRapida.template += "<dl class='searchfree'><input type='text' class='form-control' placeholder='Digite um bairro ou cidade' free-search /></dl>" + Environment.NewLine;
+objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id='123' class='form-control' placeholder='Digite um bairro ou cidade' free-search /></dl>" + Environment.NewLine;
 
 	```
+ 4. **Atenção**: não se esquecer de trocar a atributo `agency-id` pelo ID da imobiliária. Se for uma rede imobiliária, substituir pelo atributo `network-id`
