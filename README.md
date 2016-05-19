@@ -32,3 +32,34 @@ objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id=
 
 	```
  4. **Atenção**: não se esquecer de trocar a atributo `agency-id` pelo ID da imobiliária. Se for uma rede imobiliária, substituir pelo atributo `network-id`
+
+#### Alterar o campo tipo
+
+ 1. No arquivo `js\virtualGaia2.js` comentar as seguintes linhas:
+ 	```javascript
+ 	$("#ddltipo").multiselect({
+		close:function(){
+    	   $("#ddlFinalidade").selectmenu().selectmenu("refresh", true);
+  	 }
+ 	});
+
+ 	```
+ 2. Descomentar a linha:
+ 	```javascript
+ 	$("#ddltipo").append("<option value='0'>Tipo</option>");
+
+ 	```
+ 3. Remover do arquivo css `css\style.css`
+ 	```css
+ 	.busca dl.tipo .ui-selectmenu-button
+
+	```
+ 4. Alterar para `false` a seguinte linha do template da busca:
+ 	```javascript
+ 	objBuscaRapida.multiplaSelecaoTipo = false;
+
+ 	```
+ 	
+#### Verifcar layout
+
+Verifique se o layout da busca está ok, caso contrário efetuar os ajustes necessários.

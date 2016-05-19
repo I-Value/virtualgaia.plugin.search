@@ -8,7 +8,7 @@ angular.module('vg-free-search').directive('freeSearch', function() {
 		scope: {
 			agencyId: "@?",
 			networkId: "@?"
-		}
+		},
 		link: function(scope, element, attributes, ctrl){
 			if(scope.agencyId != undefined){
 				scope.url_api = 'http://search.gaiasite.com.br/autocomplete?agency=' + scope.agencyId + '&q=%QUERY&purpose=0&type=0'
@@ -16,7 +16,7 @@ angular.module('vg-free-search').directive('freeSearch', function() {
 			if(scope.networkId != undefined){
 				scope.url_api = 'http://search.gaiasite.com.br/autocomplete?network=' + scope.networkId + '&q=%QUERY&purpose=0&type=0'
 			}
-			if(scope.scope.url_api == undefined){
+			if(scope.url_api == undefined){
 				console.error("Não há a propriedade agency-id ou network-id na directiva");
 			}else{
 				$(element).wrap( "<div class='wrap-textsearch'></div>" );
