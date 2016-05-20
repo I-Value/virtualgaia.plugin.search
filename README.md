@@ -18,7 +18,7 @@ Siga os passos e seja feliz.
 
 ### Instale o plugin de Free Search
 
- 1. Rode `bower install virtual.plugin.search -D`
+ 1. Rode `bower install virtualgaia.plugin.search -D`
  2. Adicione no `head` os arquivos  após todos os .js 
 	 - `bower_components\angular\angular.min.js` 
 	 - `bower_components\virtualgaia.plugin.search\js\typeahead.bundle.min.js` 
@@ -63,3 +63,16 @@ objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id=
 #### Verifcar layout
 
 Verifique se o layout da busca está ok, caso contrário efetuar os ajustes necessários.
+
+
+# Manutenção
+
+Para dar manutenção no plugin, não se esqueça de colocar a nova versão para atualizar no bower:
+
+ ```shell
+# tag the commit
+git tag -a v0.0.2 -m "Release version 0.0.2"
+
+# push to GitHub
+git push origin master --tags  
+ ```
