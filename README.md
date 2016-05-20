@@ -18,12 +18,12 @@ Siga os passos e seja feliz.
 
 ### Instale o plugin de Free Search
 
- 1. Rode `bower install vg-free-search -D`
+ 1. Rode `bower install virtual.plugin.search -D`
  2. Adicione no `head` os arquivos  após todos os .js 
 	 - `bower_components\angular\angular.min.js` 
-	 - `bower_components\vg-free-search\js\typeahead.bundle.min.js` 
-	 - `bower_components\vg-free-search\js\free-search.directive.js` 
-	 - `bower_components\vg-free-search\css\free-search.css` 
+	 - `bower_components\virtualgaia.plugin.search\js\typeahead.bundle.min.js` 
+	 - `bower_components\virtualgaia.plugin.search\js\free-search.directive.js` 
+	 - `bower_components\virtualgaia.plugin.search\css\free-search.css` 
  3. No arquivo `inc_busca.aspx` (ou o arquivo de busca do modelo) substitua o trecho da busca rápida por:
 	```C#
 objBuscaRapida.template += "[pretensao]" + Environment.NewLine;         

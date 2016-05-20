@@ -168,9 +168,7 @@ angular.module('vg-free-search').directive('freeSearch', function() {
 				}
 			}
 		}
-
 	}
-
 };
 });
 
