@@ -8,10 +8,15 @@
 			scope: {
 				agencyId: "@?",
 				networkId: "@?",
-				form: "@?"
+				form: "@?",
+				purposeSelector: "@?",
+				typeSelector: "@?"
 			},
 			link: function(scope, element, attributes, ctrl){
-				scope.form = scope.form || '#frmBusca';				
+				scope.form = scope.form || '#frmBusca';	
+				scope.purposeSelector = scope.purposeSelector || '#ddlPretensao';
+				scope.typeSelector = scope.typeSelector || '#ddltipo';
+
 				if(scope.agencyId != undefined){
 					scope.url_api = 'http://search.gaiasite.com.br/autocomplete?agency=' + scope.agencyId + '&q=%QUERY&purpose=0&type=0'
 				}
@@ -53,8 +58,8 @@
 								url: scope.url_api,
 								replace: function(url, query) {
 									url = url.replace('%QUERY', query)
-									url = url.replace('&purpose=0', '&purpose=' + $('#ddlPretensao').val())
-									url = url.replace('&type=0', '&type=' + $('#ddltipo').val())
+									url = url.replace('&purpose=0', '&purpose=' + $(scope.purposeSelector).val())
+									url = url.replace('&type=0', '&type=' + $(scope.typeSelector).val())
 									return url
 								},
 								filter: function (items) {
@@ -147,8 +152,8 @@
 					});
 
 
-					$('#ddlPretensao').change(setFocusOnSearch);
-					$('#ddltipo').change(setFocusOnSearch).change();
+					$(scope.purposeSelector).change(setFocusOnSearch);
+					$(scope.typeSelector).change(setFocusOnSearch).change();
 
 					$(scope.form).submit(function() {
 						return canSubmit();
