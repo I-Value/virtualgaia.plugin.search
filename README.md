@@ -69,6 +69,14 @@ Verifique se o layout da busca está ok, caso contrário efetuar os ajustes nece
 
 Para dar manutenção no plugin, não se esqueça de colocar a nova versão para atualizar no bower:
 
+```javascript
+ "name": "virtualgaia.plugin.search",
+  "version": "0.0.2",
+  "authors": ...
+```
+
+E depois rodar:
+
  ```shell
 # tag the commit
 git tag -a v0.0.2 -m "Release version 0.0.2"
