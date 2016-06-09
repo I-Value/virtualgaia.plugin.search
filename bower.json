@@ -1,10 +1,11 @@
 {
   "name": "virtualgaia.plugin.search",
+  "version": "1.0.4",
   "authors": [
     "lucianonetto <lucuatro@gmail.com>"
   ],
   "description": "Busca livre para sites usando VirtualGaia",
-  "main": "",
+  "main": "js/free-search.directive.js",
   "keywords": [
     "virtualgaia"
   ],
