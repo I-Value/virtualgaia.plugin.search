@@ -26,14 +26,24 @@ Siga os passos e seja feliz.
 	 - `bower_components\virtualgaia.plugin.search\css\free-search.css`
  3. No arquivo `inc_busca.aspx` (ou o arquivo de busca do modelo) substitua o trecho da busca rápida por:
 	```C#
-objBuscaRapida.template += "[pretensao]" + Environment.NewLine;
-objBuscaRapida.template += "[tipo]" + Environment.NewLine;
-objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id='123' class='form-control' placeholder='Digite um bairro ou cidade' free-search /></dl>" + Environment.NewLine;
+	objBuscaRapida.template += "[pretensao]" + Environment.NewLine;
+	objBuscaRapida.template += "[tipo]" + Environment.NewLine;
+	objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id='123' class='form-control' placeholder='Digite um bairro ou cidade' free-search /></dl>" + Environment.NewLine;
 
 	```
  4. **Atenção**: não se esquecer de trocar a atributo `agency-id` pelo ID da imobiliária. Se for uma rede imobiliária, substituir pelo atributo `network-id`
 
+
  5. Substituir na tag `<html>` por `<html lang="pt-br" ng-app="virtualgaia">`.
+
+
+ 6. Adicionar o script na página, abaixo dos scripts de preferência:
+	 ```javascript
+	angular.module("virtualgaia",[
+		'virtualgaia.plugin.search'
+	]);
+	 ```
+----------------
 
 #### Alterar o campo tipo
 
