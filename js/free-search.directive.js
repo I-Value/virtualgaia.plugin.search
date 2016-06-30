@@ -1,8 +1,8 @@
 	// Start Angular Module
-	angular.module("vg-free-search",[]);
+	angular.module("virtualgaia.vg-free-search",[]);
 
 	// Directive
-	angular.module('vg-free-search').directive('freeSearch', function() {
+	angular.module('virtualgaia.vg-free-search').directive('freeSearch', function() {
 		return {
 			restrict: 'A',
 			scope: {
@@ -13,7 +13,7 @@
 				typeSelector: "@?"
 			},
 			link: function(scope, element, attributes, ctrl){
-				scope.form = scope.form || '#frmBusca';	
+				scope.form = scope.form || '#frmBusca';
 				scope.purposeSelector = scope.purposeSelector || '#ddlPretensao';
 				scope.typeSelector = scope.typeSelector || '#ddltipo';
 
@@ -167,11 +167,11 @@
 							$("input[name='zona']", wrapper).val() != ""){
 							$(".searchfree input").removeClass("errorInput");
 							$(".searchfree input").parent().removeClass("has-error");
-						return true; 
+						return true;
 					} else {
 						$(".searchfree input").addClass("errorInput");
 						$(".searchfree input").parent().addClass("has-error");
-						return false;					
+						return false;
 					}
 				}
 			}
@@ -179,6 +179,4 @@
 	};
 	});
 
-	angular.element(window).load(function() {
-		angular.bootstrap(document, ["vg-free-search"]);
-	});
+	angular.module("virtualgaia",['virtualgaia.vg-free-search']);
