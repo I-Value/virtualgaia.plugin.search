@@ -1,10 +1,10 @@
 // jshint strict:false
 /* globals angular: true, console: true, $: true, Bloodhound: true */
 // Start Angular Module
-angular.module("virtualgaia.plugin.search", []);
+angular.module("virtualgaia.plugin.free-search", []);
 
 // Directive
-angular.module('virtualgaia.plugin.search').directive('freeSearch', function () {
+angular.module('virtualgaia.plugin.free-search').directive('freeSearch', function () {
     return {
         restrict: 'A',
         scope: {
@@ -79,7 +79,6 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                         }
                     }
                 }
-                console.log(valid);
                 if (valid) {
                     $(".searchfree input").removeClass("errorInput");
                     $(".searchfree input").parent().removeClass("has-error");
@@ -95,7 +94,7 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
             function clearForm(form) {
                 $("select,input,textarea", form).each(function () {
                     if ($(this).val().length === 0 || $(this).val() === "0") {
-                        $(this).remove();
+                        $(this).removeAttr("name");
                     }
                 });
             }
@@ -117,79 +116,84 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                 wrapper.append('<input type="hidden" name="logradouro" />');
                 wrapper.append('<input type="hidden" name="empreendimento-pai" />');
                 wrapper.append('<input type="hidden" name="zona" />');
-
+                var empty = [
+                      '<div class="empty-message">',
+                        'Nenhum resultado foi encontrado',
+                      '</div>'
+                ].join('\n');
                 $(element).typeahead({
                     hint: false,
                     highlight: true,
                     minLength: 3
                 },
-				{
-				    name: 'neighborhood',
-				    displayKey: 'value',
-				    source: getSource('neighborhood'),
-				    templates: {
-				        header: '<h3 class="category">Bairros</h3>'
-				    }
-				},
-				{
-				    name: 'building',
-				    displayKey: 'value',
-				    source: getSource('building'),
-				    templates: {
-				        header: '<h3 class="category">Condom&iacute;nios</h3>'
-				    }
-				},
-				{
-				    name: 'street',
-				    displayKey: 'value',
-				    source: getSource('street'),
-				    templates: {
-				        header: '<h3 class="category">Endere&ccedil;os</h3>'
-				    }
-				},
-				{
-				    name: 'city',
-				    displayKey: 'value',
-				    source: getSource('city'),
-				    templates: {
-				        header: '<h3 class="category">Cidades</h3>'
-				    }
-				},
-				{
-				    name: 'region',
-				    displayKey: 'value',
-				    source: getSource('region'),
-				    templates: {
-				        header: '<h3 class="category">Regi&atilde;o</h3>'
-				    }
-				}).on('typeahead:selected', function (event, data) {
-				    clearFields();
-				    switch (data.type) {
-				        case 'city':
-				            $("input[name='cidade2']", wrapper).val(data.id);
-				            break;
+                {
+                    name: 'neighborhood',
+                    displayKey: 'value',
+                    source: getSource('neighborhood'),
+                    templates: {
+                        empty: empty,
+                        header: '<h3 class="category">Bairros</h3>',
+                    }
+                },
+                {
+                    name: 'building',
+                    displayKey: 'value',
+                    source: getSource('building'),
+                    templates: {
+                        header: '<h3 class="category">Condom&iacute;nios</h3>',
+                    }
+                },
+                {
+                    name: 'street',
+                    displayKey: 'value',
+                    source: getSource('street'),
+                    templates: {
+                        header: '<h3 class="category">Endere&ccedil;os</h3>',
+                    }
+                },
+                {
+                    name: 'city',
+                    displayKey: 'value',
+                    source: getSource('city'),
+                    templates: {
+                        header: '<h3 class="category">Cidades</h3>',
+                    }
+                },
+                {
+                    name: 'region',
+                    displayKey: 'value',
+                    source: getSource('region'),
+                    templates: {
+                        header: '<h3 class="category">Regi&atilde;o</h3>',
+                    }
+                }).on('typeahead:selected', function (event, data) {
+                    clearFields();
+                    switch (data.type) {
+                        case 'city':
+                            $("input[name='cidade2']", wrapper).val(data.id);
+                            break;
 
-				        case 'neighborhood':
-				            $("input[name='bairro']", wrapper).val(data.id);
-				            $("input[name='cidade2']", wrapper).val(data.city_id);
-				            break;
+                        case 'neighborhood':
+                            $("input[name='bairro']", wrapper).val(data.id);
+                            $("input[name='cidade2']", wrapper).val(data.city_id);
+                            break;
 
-				        case 'street':
-				            $("input[name='logradouro']", wrapper).val(data.id);
-				            break;
+                        case 'street':
+                            $("input[name='logradouro']", wrapper).val(data.id);
+                            break;
 
-				        case 'building':
-				            $("input[name='empreendimento-pai']", wrapper).val(data.id);
-				            break;
+                        case 'building':
+                            $("input[name='empreendimento-pai']", wrapper).val(data.id);
+                            break;
 
-				        case 'region':
-				            $("input[name='zona']", wrapper).val(data.id);
-				            break;
-				    }
-				    $(scope.form).submit();
-				}).bind('typeahead:render', function () {
-				    $(scope.form).parent().find('.tt-selectable:first').addClass('tt-cursor');
-				});
+                        case 'region':
+                            $("input[name='zona']", wrapper).val(data.id);
+                            break;
+                    }
+                    $(scope.form).submit();
+                }).bind('typeahead:render', function () {
+                    $(scope.form).parent().find('.tt-selectable:first').addClass('tt-cursor');
+                });
 
 
                 $(scope.purposeSelector).change(setFocusOnSearch);
