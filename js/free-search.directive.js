@@ -1,10 +1,10 @@
 // jshint strict:false
 /* globals angular: true, console: true, $: true, Bloodhound: true */
 // Start Angular Module
-angular.module("virtualgaia.plugin.free-search", []);
+angular.module("virtualgaia.plugin.search", []);
 
 // Directive
-angular.module('virtualgaia.plugin.free-search').directive('freeSearch', function () {
+angular.module('virtualgaia.plugin.search').directive('freeSearch', function () {
     return {
         restrict: 'A',
         scope: {
