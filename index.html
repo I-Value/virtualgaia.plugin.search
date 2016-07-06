@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="virtualgaia">
+	<head>
+		<title>Search</title>
+		<link rel="stylesheet" href="./css/free-search.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="js/init.angular.js"></script>
+		<script type="text/javascript" src="js/typeahead.bundle.min.js"></script>
+		<script type="text/javascript" src="js/directives/free-search.directive.js"></script>
+		<script type="text/javascript" src="js/directives/home-search.directive.js"></script>
+		<script type="text/javascript">
+			// jshint strict:false
+			/* globals angular: true */
+			angular.module("virtualgaia",[
+				'virtualgaia.plugin.search'
+			]);
+		</script>
+
+	</head>
+	<body ng-app="virtualgaia">
+		<div class="container">
+			<h1>Free search</h1>
+			<input type='text' network-id='2' class='form-control' placeholder='Digite um bairro ou cidade' free-search required-fields="" />
+			<hr>
+			<h1>Home Search</h1>
+			<home-search></home-search>
+		</div>
+	</body>
+</html>
