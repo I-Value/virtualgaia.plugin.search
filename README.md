@@ -1,24 +1,29 @@
-#Plugin Free Search para VirtualGaia (V2)
+# Plugin Free Search para VirtualGaia (V2)
 
-##Instalação
+Conteúdo
+-----------------
 
-- [Instalando o módulo no virtualgaia.plugin.search (obrigatório)](#general)
-- [Instalando o free-search (deprecated)](#freesearch)
-- [Instalando o home-search](#homesearch)
+* [Requerimentos](#requerimentos)
+* [Module virtualgaia.plugin.search](#virtualgaiapluginsearch) (obrigatório)
+* [Directive free-search](#directive-free-search) (deprecated)
+* [Directive home-search](#directive-home-search)
 
-### Requirementos
+-----------------
+## Requerimentos
 
 - Node  [NodeJS](https://nodejs.org/en/)
 - Bower `npm install bower -g`
 
-### Verificar se há o bower.json no site
+## Verificar se há o bower.json no site
 Se não haver o arquivo `bower.json`  na raiz do site:
 ```shell
 bower init
 ```
 Siga os passos e seja feliz.
 
-###<a name="general"> Instalando o módulo no virtualgaia.plugin.search</a>
+-----------------
+## virtualgaia.plugin.search
+
  1. `bower install virtualgaia.plugin.search -D`
  2. Adicione os js (verifique se já não está):
 	 - `bower_components\angular\angular.min.js`
@@ -31,9 +36,14 @@ Siga os passos e seja feliz.
 	angular.module("virtualgaia",[
 		'virtualgaia.plugin.search'
 	]);
-	 ```
-### <a name="freesearch"> Instalando o free-search (deprecated)</a>
-Após instalar o [virtualgaia.plugin.search](general)
+	```
+
+
+-----------------
+## Directive free-search
+
+
+Após instalar o [virtualgaia.plugin.search](virtualgaiapluginsearch)
 
  1. No arquivo `inc_busca.aspx` (ou o arquivo de busca do modelo) substitua o trecho da busca rápida por:
 	```C#
@@ -70,13 +80,16 @@ Após instalar o [virtualgaia.plugin.search](general)
  	objBuscaRapida.multiplaSelecaoTipo = false;
 
  	```
-###<a name="home-search">Instalando o home-search</a>
-Após instalar o [virtualgaia.plugin.search](general)
+
+-----------------
+## Directive home-search
+Após instalar o [virtualgaia.plugin.search](virtualgaiapluginsearch)
 1. Coloque no html:
 	```html
 	<home-search></home-search>
 	```
 
+-----------------
 # Manutenção
 
 Para dar manutenção no plugin, não se esqueça de colocar a nova versão para atualizar no bower:
