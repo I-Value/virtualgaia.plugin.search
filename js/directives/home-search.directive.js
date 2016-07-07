@@ -12,7 +12,7 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
         },
         controllerAs: "vm",
         controller: function($scope){
-            $scope.remote = $scope.remote || "http://docker:8765";
+            $scope.remote = $scope.remote || "./";
             $scope.destination = $scope.destination || "listagem.aspx";
             $scope.getSource = getSource;
             $scope.submit = submit;
@@ -72,6 +72,8 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
                             return url;
                         },
                         filter: function (items) {
+                            vm.nothing = (items.data.length < 1);
+                            $scope.$digest();
                             return $.map(items.data, function (item) {
                                 if (item.type == item_type) {
                                     return {
@@ -96,14 +98,23 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
                     }
                     if(vm.query.ref) vm.query = new Object({ref: vm.query.ref});
                     var dest = vm.destination + "?" + $httpParamSerializer(vm.query);
-                    console.log(dest);
-                    // location.href = dest;
+                    location.href = dest;
                 }
             }
 
         },
         link: function (scope, element /*, attributes, ctrl*/) {
-
+            function clear(){
+                delete(scope.vm.query.cidade2);
+                delete(scope.vm.query.bairro);
+                delete(scope.vm.query.ref);
+                delete(scope.vm.q);
+                $("input[name='free-search']",element).typeahead('val','');
+            }
+            function pluralize(count,sing,plural){
+                return (count > 1) ? count + " " + plural : count + " " + sing;
+            }
+            scope.vm.clear = clear;
             $("input[name='free-search']",element).typeahead({
                     hint: false,
                     highlight: true,
@@ -116,7 +127,8 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
                     templates: {
                         header: '<h3 class="category">Bairros</h3>',
                         suggestion: function(data){
-                            return "<div>" + data.value + "<small class='counter'>" + data.count +" imóveis</small></div>";
+                            return "<div>" + data.value + "<small class='counter'>" +
+                            pluralize(data.count,'imóvel','imóveis') + " </small></div>";
                         }
                     }
                 },
@@ -127,11 +139,11 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
                     templates: {
                         header: '<h3 class="category">Cidades</h3>',
                         suggestion: function(data){
-                            return "<div>" + data.value + "<small class='counter'>" + data.count +" imóveis</small></div>";
+                            return "<div>" + data.value + "<small class='counter'>" +
+                            pluralize(data.count,'imóvel','imóveis') + " </small></div>";
                         }
                     }
-                }
-                ).on('typeahead:selected', function (event, data) {
+                }).on('typeahead:selected', function (event, data) {
                     if(data.type == 'bairro'){
                         scope.vm.query.bairro = data.id;
                         scope.vm.query.cidade2 = data.parent_id;
@@ -139,6 +151,13 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
                         scope.vm.query.cidade2 = data.id;
                     }
                     scope.vm.submit(scope.vm.frmBusca);
+                }).on('typeahead:asyncrequest', function () {
+                    scope.vm.loading = true;
+                    delete(scope.vm.nothing);
+                    scope.$digest();
+                }).on('typeahead:asyncreceive', function () {
+                    delete(scope.vm.loading);
+                    scope.$digest();
                 }).bind('typeahead:render', function () {
                     $("input[name='free-search']",element).parent().find('.tt-selectable:first').addClass('tt-cursor');
                 });

@@ -1,13 +1,15 @@
-#Plugin Free Search para VirtualGaia
+#Plugin Free Search para VirtualGaia (V2)
 
 ##Instalação
 
-### Bower
-Verifique se está instalado em seu computado o Node e o Bower. Caso não estiver:
+- [Instalando o módulo no virtualgaia.plugin.search (obrigatório)](#general)
+- [Instalando o free-search (deprecated)](#freesearch)
+- [Instalando o home-search](#homesearch)
 
-### Instale Node e Bower no seu computador
- 1. Instale o  [NodeJS](https://nodejs.org/en/)
- 2. Após, instale o bower com `npm install bower -g`
+### Requirementos
+
+- Node  [NodeJS](https://nodejs.org/en/)
+- Bower `npm install bower -g`
 
 ### Verificar se há o bower.json no site
 Se não haver o arquivo `bower.json`  na raiz do site:
@@ -16,34 +18,31 @@ bower init
 ```
 Siga os passos e seja feliz.
 
-### Instale o plugin de Free Search
-
- 1. Rode `bower install virtualgaia.plugin.search -D`
- 2. Adicione no `head` os arquivos  após todos os .js
+###<a name="general"> Instalando o módulo no virtualgaia.plugin.search</a>
+ 1. `bower install virtualgaia.plugin.search -D`
+ 2. Adicione os js (verifique se já não está):
 	 - `bower_components\angular\angular.min.js`
-	 - `bower_components\virtualgaia.plugin.search\js\typeahead.bundle.min.js`
-	 - `bower_components\virtualgaia.plugin.search\js\free-search.directive.js`
+	 - `bower_components\virtualgaia.plugin.search\dist\virtualgaia.plugin.search.min.js`
 	 - `bower_components\virtualgaia.plugin.search\css\free-search.css`
- 3. No arquivo `inc_busca.aspx` (ou o arquivo de busca do modelo) substitua o trecho da busca rápida por:
+
+ 3. Substituir na tag `<html>` por `<html lang="pt-br" ng-app="virtualgaia">`.
+ 4. Adicionar o script na página, abaixo dos scripts de preferência:
+	```javascript
+	angular.module("virtualgaia",[
+		'virtualgaia.plugin.search'
+	]);
+	 ```
+### <a name="freesearch"> Instalando o free-search (deprecated)</a>
+Após instalar o [virtualgaia.plugin.search](general)
+
+ 1. No arquivo `inc_busca.aspx` (ou o arquivo de busca do modelo) substitua o trecho da busca rápida por:
 	```C#
 	objBuscaRapida.template += "[pretensao]" + Environment.NewLine;
 	objBuscaRapida.template += "[tipo]" + Environment.NewLine;
 	objBuscaRapida.template += "<dl class='searchfree'><input type='text' agency-id='123' class='form-control' placeholder='Digite um bairro ou cidade' free-search /></dl>" + Environment.NewLine;
 
 	```
- 4. **Atenção**: não se esquecer de trocar a atributo `agency-id` pelo ID da imobiliária. Se for uma rede imobiliária, substituir pelo atributo `network-id`
-
-
- 5. Substituir na tag `<html>` por `<html lang="pt-br" ng-app="virtualgaia">`.
-
-
- 6. Adicionar o script na página, abaixo dos scripts de preferência:
-	 ```javascript
-	angular.module("virtualgaia",[
-		'virtualgaia.plugin.search'
-	]);
-	 ```
-----------------
+ 2. **Atenção**: não se esquecer de trocar a atributo `agency-id` pelo ID da imobiliária. Se for uma rede imobiliária, substituir pelo atributo `network-id`
 
 #### Alterar o campo tipo
 
@@ -71,11 +70,12 @@ Siga os passos e seja feliz.
  	objBuscaRapida.multiplaSelecaoTipo = false;
 
  	```
-
-#### Verifcar layout
-
-Verifique se o layout da busca está ok, caso contrário efetuar os ajustes necessários.
-
+###<a name="home-search">Instalando o home-search</a>
+Após instalar o [virtualgaia.plugin.search](general)
+1. Coloque no html:
+	```html
+	<home-search></home-search>
+	```
 
 # Manutenção
 
@@ -87,12 +87,17 @@ Para dar manutenção no plugin, não se esqueça de colocar a nova versão para
   "authors": ...
 ```
 
-E depois rodar:
-
+Instale os pacotes Node
  ```shell
-# tag the commit
+npm install
+gulp
+ ```
+ Crie as tags
+ ```shell
+git tag the commit
 git tag -a v0.0.2 -m "Release version 0.0.2"
-
-# push to GitHub
-git push origin master --tags
+ ```
+Push to GitHub
+ ```shell
+ git push origin master --tags
  ```
