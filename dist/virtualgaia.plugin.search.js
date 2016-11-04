@@ -62,6 +62,7 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                         },
                         filter: function (items) {
                             // Map the remote source JSON array to a JavaScript object array
+                            toggleEmpty(items.total);
                             return $.map(items.hits, function (item) {
                                 if (item.type == item_type) {
                                     return {
@@ -109,6 +110,22 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                 });
             }
 
+            function addEmpty(){
+                var empty = [
+                      '<div class="tt-menu open empty-div">',
+                      '<div class="tt-dataset tt-dataset-empty">Nenhum resultado encontrado</div>',
+                      '</div>'
+                ].join('\n');
+
+                $(element).after(empty);
+                $(".empty-div").hide();
+            }
+            function toggleEmpty(count) {
+                if (count < 1) return $(".empty-div").show();
+                return $(".empty-div").hide();
+            }
+            addEmpty();
+
 
             if (scope.agencyId !== undefined) {
                 scope.url_api = 'http://search.gaiasite.com.br/autocomplete?agency=' + scope.agencyId + '&q=%QUERY&purpose=0&type=0';
@@ -126,11 +143,7 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                 wrapper.append('<input type="hidden" name="logradouro" />');
                 wrapper.append('<input type="hidden" name="empreendimento-pai" />');
                 wrapper.append('<input type="hidden" name="zona" />');
-                var empty = [
-                      '<div class="empty-message">',
-                        'Nenhum resultado foi encontrado',
-                      '</div>'
-                ].join('\n');
+
                 $(element).typeahead({
                     hint: false,
                     highlight: true,
@@ -141,7 +154,6 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                     displayKey: 'value',
                     source: getSource('neighborhood'),
                     templates: {
-                        empty: empty,
                         header: '<h3 class="category">Bairros</h3>',
                     }
                 },
@@ -382,3 +394,14 @@ angular.module('virtualgaia.plugin.search').directive('homeSearch', function ($h
         }
     };
 });
+(function(module) {
+try {
+  module = angular.module('virtualgaia.plugin.search');
+} catch (e) {
+  module = angular.module('virtualgaia.plugin.search', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('js/directives/partials/home-search.directive.html',
+    '<section class="section busca home"><form method="GET" name="vm.frmBusca" ng-submit="vm.submit(vm.frmBusca)" novalidate=""><div class="container"><div class="row" ng-show="vm.searchBy != \'reference\'"><dl class="col-sm-3 col-md-2"><dt><label name="ddlpretensao" for="tipo">Quero:</label></dt><dd><select name="ddlpretensao" class="form-control" ng-change="vm.clear()" ng-model="vm.query.ddlPretensao"><option value="1" ng-show="vm.purposes[1]">Comprar</option><option value="2" ng-show="vm.purposes[2]">Alugar</option></select></dd></dl><dl class="col-sm-3 col-md-2"><dt><label name="lbltipo" for="tipo">Tipo do Imóvel:</label></dt><dd><select name="tipo" class="form-control" ng-disabled="!vm.property_types" ng-change="vm.clear()" ng-options="type.value as type.title for type in vm.property_types[vm.query.ddlPretensao] | orderBy: \'title\'" ng-model="vm.query.tipo"><option value="">Tipo</option></select></dd></dl><dl class="searchfree col-sm-3 col-md-6"><dt><label for="free-search">Bairro ou cidade:</label></dt><dd><div class="form-group has-feedback"><input name="free-search" type="text" class="form-control" placeholder="Digite um bairro ou cidade" ng-model="vm.q"> <span class="form-control-feedback" ng-show="vm.loading"><i class="fa fa-spinner fa-spin"></i></span> <span class="help-block" ng-if="vm.nothing">Nenhum resultado encontrado com <code ng-bind="vm.q"></code></span></div></dd></dl><dl class="btnEnviarWrap col-sm-3 col-md-2"><button type="submit" class="btn btn-lg btn-block bgColor2 bgHover1"><i class="fa fa-search"></i> Buscar</button></dl></div><div class="row" ng-show="vm.searchBy == \'reference\'"><dl class="col-sm-8 col-md-10 busca-cod"><dt><label name="lbltipo" for="tipo">Busque pela referência:</label></dt><dd><input class="form-control" type="text" name="ref" ng-required="vm.searchBy == \'reference\'" ng-model="vm.query.ref" placeholder="Digite o código. (Ex: CA0001)"></dd></dl><dl class="btnEnviarWrap col-sm-4 col-md-2"><button type="submit" class="btn btn-lg btn-block bgColor2 bgHover1"><i class="fa fa-search"></i> Buscar</button></dl></div><div class="text-center"><a href="" class="btnCodigo busca-codigo" ng-click="vm.searchBy = \'reference\'" ng-show="vm.searchBy != \'reference\'">Busca por Código do Imóvel</a> <a href="" class="btnCodigo busca-codigo" ng-click="vm.searchBy = \'features\'; vm.query.ref = null" ng-show="vm.searchBy == \'reference\'">Busca por características</a></div></div></form></section>');
+}]);
+})();

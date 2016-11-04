@@ -49,6 +49,7 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                         },
                         filter: function (items) {
                             // Map the remote source JSON array to a JavaScript object array
+                            toggleEmpty(items.total);
                             return $.map(items.hits, function (item) {
                                 if (item.type == item_type) {
                                     return {
@@ -96,6 +97,22 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                 });
             }
 
+            function addEmpty(){
+                var empty = [
+                      '<div class="tt-menu open empty-div">',
+                      '<div class="tt-dataset tt-dataset-empty">Nenhum resultado encontrado</div>',
+                      '</div>'
+                ].join('\n');
+
+                $(element).after(empty);
+                $(".empty-div").hide();
+            }
+            function toggleEmpty(count) {
+                if (count < 1) return $(".empty-div").show();
+                return $(".empty-div").hide();
+            }
+            addEmpty();
+
 
             if (scope.agencyId !== undefined) {
                 scope.url_api = 'http://search.gaiasite.com.br/autocomplete?agency=' + scope.agencyId + '&q=%QUERY&purpose=0&type=0';
@@ -113,11 +130,7 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                 wrapper.append('<input type="hidden" name="logradouro" />');
                 wrapper.append('<input type="hidden" name="empreendimento-pai" />');
                 wrapper.append('<input type="hidden" name="zona" />');
-                var empty = [
-                      '<div class="empty-message">',
-                        'Nenhum resultado foi encontrado',
-                      '</div>'
-                ].join('\n');
+
                 $(element).typeahead({
                     hint: false,
                     highlight: true,
@@ -128,7 +141,6 @@ angular.module('virtualgaia.plugin.search').directive('freeSearch', function () 
                     displayKey: 'value',
                     source: getSource('neighborhood'),
                     templates: {
-                        empty: empty,
                         header: '<h3 class="category">Bairros</h3>',
                     }
                 },

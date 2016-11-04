@@ -7,10 +7,11 @@ const concat = require('gulp-concat');
 const pump = require("pump");
 const ngHtml2Js = require("gulp-ng-html2js");
 const minifyHtml = require("gulp-minify-html");
+const rename = require("gulp-rename");
 
 
 gulp.task('default', function(){
-	gulp.start('html2js','concat', 'compress');
+	gulp.start('html2js','concat');
 });
 
 gulp.task('watch', function() {
@@ -45,13 +46,14 @@ gulp.task('concat', ()=>{
 	]);
 });
 
-gulp.task('compress', ()=>{
-	pump([
-		gulp.src('js/**/*.js'),
-		uglify({mangle: false}),
-		concat('virtualgaia.plugin.search.min.js'),
-		gulp.dest('dist')
-	]);
+gulp.task('compress', () => {
+
+	return gulp.src(['./dist/*.js','!./dist/*.min.js'])
+		.pipe(uglify({mangle: false}))
+		.pipe(rename((path) => { path.basename += ".min" }))
+		.pipe(gulp.dest('dist'))
+	;
+
 });
 
 
